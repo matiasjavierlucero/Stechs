@@ -15,16 +15,13 @@
 </div>
 <div class="container">
     <div class="row mt-4">
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col text-center">
-            <form action="/listar_no_habilitados" method="post" >
-                <input type="text" placeholder="Ingrese un modelo" name="vendor" class="form-control">
-                <button type="submit" class="btn btn-success mt-2" >Buscar</button>
-            </form>
+      <div class="col">
+          <h5>Su busqueda "{{vendor}}" no arrojo resusltados. Quizas desea configurar su busqueda como TAG que alguna de las siguientes empresas</h5>
+            {%for fabricante in Fabricantes%}
+            <li>{{fabricante}}</li>
+            {%endfor%}
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
+
     </div>
 </div>
 {%endblock%}

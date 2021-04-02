@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, make_response, jsonify, g, jsonify, Response,json
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify,Response,json
 import requests
 app = Flask(__name__)
-
+app.secret_key = 'FlaskLaUtilizaParaRetornarMensajesFlash'
 
 @app.route ('/')
 def index ():
@@ -11,8 +11,17 @@ def index ():
 def listar_no_habilitados ():
     if request.method=='POST':
         vendor=request.form['vendor']
-        print(vendor)
-        return render_template('nohabilitados.html')
+        data = {'vendor':vendor}
+        resp = requests.post('http://localhost:4500/search_available', data=data)
+        resp=resp.json()['Modelos no habilitados']
+        if len(resp)<1:
+            flash('No se ha encontrado ningun resultado para su busqueda','danger')
+            resp = requests.get('http://localhost:4500/search_vendor')
+            Frabricantes=resp.json()['Fabricantes']
+            return render_template('agregartags.html',vendor=vendor,Fabricantes=Frabricantes)
+
+        else:
+            return render_template('nohabilitados.html',listado=resp,vendor=vendor)
 
 
 
