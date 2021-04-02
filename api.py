@@ -17,7 +17,7 @@ cur = mysql.connect().cursor()
 
 
 modems_habilitados=[]
-with open('models.json') as file:
+with open('nuevojson.json') as file:
     data = json.load(file)
     for models  in data['models']:
         if models not in modems_habilitados:
@@ -26,13 +26,17 @@ with open('models.json') as file:
 @app.route('/search_available', methods=['POST'])
 def search():
         vendor=str(request.form['vendor'])
-        
         #ARMO MI LISTA DE MODELOS HABILITADOS DADO EL VENDOR
         modelos_del_vendor=[]
         for modelos in modems_habilitados:
             if modelos['vendor']==vendor:
                 modelos_del_vendor.append({'name':modelos['name'],'version':modelos['soft']})
-        
+            else:
+                for tag in modelos['tags']:
+                    if tag==vendor:
+                        vendor=modelos['vendor']
+                        modelos_del_vendor.append({'name':modelos['name'],'version':modelos['soft']})
+        print("Modelos del vendor",modelos_del_vendor)
         #BUSCO TODOS LOS REGISTROS EN LA TABLA QUE EXISTEN BAJO EL MISMO VENDOR
         cur.execute(f"SELECT modem_macaddr,ipaddr,vsi_model,version FROM docsis_update WHERE vsi_vendor like '{vendor}%'")
         resultado=cur.fetchall()
@@ -45,7 +49,7 @@ def search():
                     if result not in nohabilidatos:
                         nohabilidatos.append(result)
         
-        return jsonify({'Modelos no habilitados':nohabilidatos})
+        return jsonify({'Modelos no habilitados':nohabilidatos,'Vendor':vendor})
 
 @app.route('/search_vendor', methods=['GET'])
 def get_vendor():

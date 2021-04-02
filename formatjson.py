@@ -19,7 +19,7 @@ for modem in modems_habilitados:
       "vendor": modem['vendor'],
       "name": modem['name'],
       "soft": modem['soft'],
-      "tags":''
+      "tags":[]
     })
 
 with open('nuevojson.json', 'w') as file:

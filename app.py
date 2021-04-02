@@ -13,15 +13,16 @@ def listar_no_habilitados ():
         vendor=request.form['vendor']
         data = {'vendor':vendor}
         resp = requests.post('http://localhost:4500/search_available', data=data)
-        resp=resp.json()['Modelos no habilitados']
-        if len(resp)<1:
+        Modelos=resp.json()['Modelos no habilitados']
+        Vendor=resp.json()['Vendor']
+        if len(Modelos)<1:
             flash('No se ha encontrado ningun resultado para su busqueda','danger')
             resp = requests.get('http://localhost:4500/search_vendor')
             Frabricantes=resp.json()['Fabricantes']
-            return render_template('agregartags.html',vendor=vendor,Fabricantes=Frabricantes)
-
+            return render_template('agregartags.html',vendor=Vendor,Fabricantes=Frabricantes)
         else:
-            return render_template('nohabilitados.html',listado=resp,vendor=vendor)
+    
+            return render_template('nohabilitados.html',listado=Modelos,vendor=Vendor)
 
 
 
