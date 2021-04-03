@@ -24,7 +24,16 @@ def listar_no_habilitados ():
     
             return render_template('nohabilitados.html',listado=Modelos,vendor=Vendor)
 
-
+@app.route('/guardartag',methods=['POST'])
+def Guardartag():
+    if request.method=='POST':
+        tag=request.form['nuevotag']
+        vendortag=request.form['tagvendor']
+        data = {'vendortag':vendortag,'tag':tag}
+        resp = requests.post('http://localhost:4500/newtag', data=data)
+        resp=resp.status_code
+        flash(f"Se guardo un nuevo Tag ({tag}) para {vendortag}","success")
+        return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1',port='5000',debug=True)

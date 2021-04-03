@@ -15,13 +15,21 @@
 </div>
 <div class="container">
     <div class="row mt-4">
-      <div class="col">
-          <h5>Su busqueda "{{vendor}}" no arrojo resusltados. Quizas desea configurar su busqueda como TAG que alguna de las siguientes empresas</h5>
-            {%for fabricante in Fabricantes%}
-            <li>{{fabricante}}</li>
-            {%endfor%}
+      <div class="col-6 text-center mb-2" >
+          <h5 >Su busqueda "{{vendor}}" no arrojo resusltados. Quizas desea configurar su busqueda como TAG que alguna de las siguientes empresas</h5>
+          <form action="/guardartag" method="POST">
+            <input type="text" class="d-none" name="nuevotag" value={{vendor}} >
+             <select name="tagvendor" id="" class="form-control">  
+                {%for fabricante in Fabricantes%}
+                    <option>{{fabricante}}</option>
+                {%endfor%}
+            </select>
+            <button type="submit" class="btn btn-info mt-2">Guardar Tag</button>
+        </form>
         </div>
-
+        <div class="col-6 text-center">
+            <a href="/" class="btn btn-success"><i class="fa fa-search" aria-hidden="true"></i>Realizar Nueva Busqueda</a>
+        </div>
     </div>
 </div>
 {%endblock%}
