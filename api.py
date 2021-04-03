@@ -32,7 +32,8 @@ def array_vendor():
             if models['vendor'] not in vendor_habilitados:
                 vendor_habilitados.append(models['vendor'])
 
-
+array_modelos()
+array_vendor()
             
 
 @app.route('/search_enable', methods=['POST'])
@@ -54,7 +55,7 @@ def search():
                     modelos_del_vendor.append({'name':modelos['name'],'version':modelos['soft']})
                 else:
                     pass
-    print("Modelos del vendor",modelos_del_vendor)
+
     #BUSCO TODOS LOS REGISTROS EN LA TABLA QUE EXISTEN BAJO EL MISMO VENDOR
     cur.execute(f"SELECT modem_macaddr,ipaddr,vsi_model,version FROM docsis_update WHERE vsi_vendor like '{vendor}%'")
     resultado=cur.fetchall()
@@ -62,11 +63,10 @@ def search():
     #COMPARO EL RESULTADO CON MI LISTA DE MODEMS DEL VENDOR PARA SOLO TOMAR LOS QUE NO EXISTEN EN EL JSON
     nohabilidatos=[]
     for result in resultado:
-        for modelos in modelos_del_vendor:
-            if result[2]!=modelos['name'] and result[3]!=modelos['version']: #Comparo vsi_model
-                if result not in nohabilidatos:
-                    nohabilidatos.append(result)
-    
+        item={'name':result[2],'version':result[3]}
+        if item not in modelos_del_vendor:       
+            nohabilidatos.append(result)
+
     return jsonify({'Modelos no habilitados':nohabilidatos,'Vendor':vendor})
 
 @app.route('/search_vendor', methods=['GET'])
@@ -94,10 +94,12 @@ def newtag():
 
 @app.route('/modem_enable',methods=['POST'])
 def modem_enable():
+    array_modelos()
+    array_vendor()
     macaddress=str(request.form['macaddress'])
-    print("MAC ADDRESS ====> ",macaddress)
     cur.execute("SELECT vsi_vendor,vsi_model,version FROM docsis_update WHERE modem_macaddr=%s",(macaddress))
     modem=cur.fetchall()
+   
     return jsonify ({'Modem':modem}),200
 
 @app.route('/enable_confirm',methods=['POST'])
@@ -107,7 +109,6 @@ def enable_confirm():
     fabricante=request.form['fabricante']
     tags=request.form['tags']
     tags=tags.split(',')
-    print(tags)
     
     
     #Esto almacena el modelo
@@ -142,8 +143,12 @@ def enable_confirm():
 
     array_modelos()
     array_vendor()
-    print("LLEGO  BIEN HASTA ACA")
     return jsonify({'Ok':'Ok'}),200
 
+@app.route('/list_vendor',methods=['GET'])
+def list_vendor():
+    cur.execute("Select vsi_vendor FROM docsis_update GROUP BY vsi_vendor")
+    listado=cur.fetchall()
+    return jsonify({'Listado':listado})
 
 app.run(host='127.0.0.1',port='4500',debug=True)

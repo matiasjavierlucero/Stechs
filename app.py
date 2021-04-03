@@ -5,7 +5,9 @@ app.secret_key = 'FlaskLaUtilizaParaRetornarMensajesFlash'
 
 @app.route ('/')
 def index ():
-    return render_template('index.html')
+    resp = requests.get('http://localhost:4500/list_vendor')
+    listadofabricantes=resp.json()['Listado']
+    return render_template('index.html',Listado=listadofabricantes)
 
 @app.route ('/listar_no_habilitados',methods=['POST'])
 def listar_no_habilitados ():

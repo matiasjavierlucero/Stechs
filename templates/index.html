@@ -15,16 +15,31 @@
 </div>
 <div class="container">
     <div class="row mt-4">
-        <div class="col"></div>
-        <div class="col"></div>
+
+ 
         <div class="col text-center">
+            <h3>Listar no Disponibles</h3>
+            <label for="Fabricante">Ingrese un fabricante</label>
             <form action="/listar_no_habilitados" method="post" >
                 <input type="text" placeholder="Ingrese un modelo" name="vendor" class="form-control">
                 <button type="submit" class="btn btn-success mt-2" >Buscar</button>
             </form>
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col">
+            <h3>Obtener Estadisticas</h3>
+            <label for="Fabricante">Seleccione un fabricante</label>
+            <select name="fabricante" id="" class="form-control">
+                {%for fabricante in Listado%}
+                    {%if fabricante.0==''%}
+                    <option value="{{fabricante.0}}">Sin Nombre</option>
+                    {%endif%}
+                    {%if fabricante.0!=''%}
+                    <option value="{{fabricante}}">{{fabricante.0}}</option>
+                    {%endif%}
+                {%endfor%}
+            </select>
+        </div>
+        
     </div>
 </div>
 {%endblock%}
