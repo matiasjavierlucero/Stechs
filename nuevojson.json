@@ -1,1 +1,99 @@
-{"models": [{"name": "DPC3825", "soft": "v1", "tags": ["Sisco", "Zisco", "SISCO", "Zico"], "vendor": "Cisco"}, {"name": "DPC9989", "soft": "v1", "tags": ["Sisco", "Zisco", "SISCO", "Zico"], "vendor": "Cisco"}, {"name": "SBG901", "soft": "v1", "tags": ["moto"], "vendor": "Moto"}, {"name": "DPC2320", "soft": "v1", "tags": ["Sisco", "Zisco", "SISCO", "Zico"], "vendor": "Cisco"}, {"name": "DG860P2", "soft": "v1", "tags": [], "vendor": "Arris"}, {"name": "SBG900", "soft": "v1", "tags": ["moto"], "vendor": "Moto"}, {"name": "DG950A", "soft": "v1", "tags": [], "vendor": "Arris"}, {"name": "TG862A", "soft": "v1", "tags": [], "vendor": "Arris"}, {"name": "DG860P2_v9", "soft": "v1", "tags": [], "vendor": "Arris"}, {"name": "DG1660A", "soft": "v1", "tags": [], "vendor": "Arris"}, {"name": "DG1555", "soft": "v1", "tags": [], "vendor": "Arris"}, {"name": "DG1660A_v9", "soft": "v1", "tags": [], "vendor": "Arris"}], "version": "v1.0"}
+{
+    "models": [
+        {
+            "name": "DPC3825",
+            "soft": "v1",
+            "tags": [
+                "cisco",
+                "CISCO",
+                "SIsco"
+            ],
+            "vendor": "Cisco"
+        },
+        {
+            "name": "DPC9989",
+            "soft": "v1",
+            "tags": [
+                "cisco",
+                "CISCO",
+                "SIsco"
+            ],
+            "vendor": "Cisco"
+        },
+        {
+            "name": "SBG901",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Moto"
+        },
+        {
+            "name": "DPC2320",
+            "soft": "v1",
+            "tags": [
+                "cisco",
+                "CISCO",
+                "SIsco"
+            ],
+            "vendor": "Cisco"
+        },
+        {
+            "name": "DG860P2",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Arris"
+        },
+        {
+            "name": "SBG900",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Moto"
+        },
+        {
+            "name": "DG950A",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Arris"
+        },
+        {
+            "name": "TG862A",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Arris"
+        },
+        {
+            "name": "DG860P2_v9",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Arris"
+        },
+        {
+            "name": "DG1660A",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Arris"
+        },
+        {
+            "name": "DG1555",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Arris"
+        },
+        {
+            "name": "DG1660A_v9",
+            "soft": "v1",
+            "tags": [],
+            "vendor": "Arris"
+        },
+        {
+            "name": "DPC2420",
+            "soft": "2.0",
+            "tags": [
+                "cisco",
+                "CISCO",
+                "SIsco"
+            ],
+            "vendor": "Cisco"
+        }
+    ],
+    "version": "v1.0"
+}

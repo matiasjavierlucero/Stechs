@@ -12,7 +12,7 @@ def listar_no_habilitados ():
     if request.method=='POST':
         vendor=request.form['vendor']
         data = {'vendor':vendor}
-        resp = requests.post('http://localhost:4500/search_available', data=data)
+        resp = requests.post('http://localhost:4500/search_enable', data=data)
         Modelos=resp.json()['Modelos no habilitados']
         Vendor=resp.json()['Vendor']
         if len(Modelos)<1:
@@ -34,6 +34,35 @@ def Guardartag():
         resp=resp.status_code
         flash(f"Se guardo un nuevo Tag ({tag}) para {vendortag}","success")
         return render_template('index.html')
+
+@app.route('/habilitarmodem/<macaddress>')
+def habilitarmodem(macaddress):
+    data = {'macaddress':macaddress}
+    resp = requests.post('http://localhost:4500/modem_enable', data=data)
+    status=resp.status_code
+    if status==200:
+        Modem=resp.json()['Modem']
+        resp = requests.get('http://localhost:4500/search_vendor')
+        Frabricantes=resp.json()['Fabricantes']
+        flash("Modem habilitado","success")
+        return render_template('habilitarmodem.html',Modem=Modem,Fabricantes=Frabricantes)
+
+@app.route('/guardarmodems',methods=['POST'])
+def guardarmodem():
+    print("ENTRA")
+    modelo=request.form['Modelo']
+    version=request.form['Version']
+    fabricante=request.form['Fabricante']
+    tags=str(request.form['Tags'])
+    data = {
+        "modelo":modelo,
+        "version":version,
+        "fabricante":fabricante,
+        "tags":tags
+        }
+    resp = requests.post('http://localhost:4500/enable_confirm', data=data)
+    status=resp.status_code
+    return render_template('index.html')
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1',port='5000',debug=True)

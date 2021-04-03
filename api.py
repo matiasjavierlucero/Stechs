@@ -35,7 +35,7 @@ def array_vendor():
 
             
 
-@app.route('/search_available', methods=['POST'])
+@app.route('/search_enable', methods=['POST'])
 def search():
     array_modelos()
     array_vendor()
@@ -43,15 +43,17 @@ def search():
     #ARMO MI LISTA DE MODELOS HABILITADOS DADO EL VENDOR
     modelos_del_vendor=[]
     for modelos in modems_habilitados:
+        print(modelos)
         if modelos['vendor']==vendor:
             modelos_del_vendor.append({'name':modelos['name'],'version':modelos['soft']})
         else:
-            ("Entro aca")
+            print("Entro aca")
             for tag in modelos['tags']:
                 if tag==vendor:
                     vendor=modelos['vendor']
                     modelos_del_vendor.append({'name':modelos['name'],'version':modelos['soft']})
-
+                else:
+                    pass
     print("Modelos del vendor",modelos_del_vendor)
     #BUSCO TODOS LOS REGISTROS EN LA TABLA QUE EXISTEN BAJO EL MISMO VENDOR
     cur.execute(f"SELECT modem_macaddr,ipaddr,vsi_model,version FROM docsis_update WHERE vsi_vendor like '{vendor}%'")
@@ -88,6 +90,59 @@ def newtag():
         f.write(json.dumps(json_data))
     array_modelos()
     array_vendor()
+    return jsonify({'Ok':'Ok'}),200
+
+@app.route('/modem_enable',methods=['POST'])
+def modem_enable():
+    macaddress=str(request.form['macaddress'])
+    print("MAC ADDRESS ====> ",macaddress)
+    cur.execute("SELECT vsi_vendor,vsi_model,version FROM docsis_update WHERE modem_macaddr=%s",(macaddress))
+    modem=cur.fetchall()
+    return jsonify ({'Modem':modem}),200
+
+@app.route('/enable_confirm',methods=['POST'])
+def enable_confirm():
+    modelo=request.form['modelo']
+    version=request.form['version']
+    fabricante=request.form['fabricante']
+    tags=request.form['tags']
+    tags=tags.split(',')
+    print(tags)
+    
+    
+    #Esto almacena el modelo
+    with open('nuevojson.json', 'r') as f:
+        json_data = json.load(f)
+        nuevomodelo={
+        "vendor":fabricante,
+        "name":modelo,
+        "soft":version,
+        "tags":[]
+        }
+        if nuevomodelo not in json_data['models']:
+            for model in json_data['models']:
+                if model['vendor']==fabricante:
+                    if model['tags'] not in nuevomodelo['tags']:
+                        nuevomodelo['tags']=model['tags']
+            json_data['models'].append(nuevomodelo)
+
+    with open('nuevojson.json', 'w') as f:
+        f.write(json.dumps(json_data))
+
+    #Ahora debo agregar los tag a cada uno de los modelos del vendor
+    with open('nuevojson.json', 'r') as f:
+        json_data = json.load(f)
+        for model in json_data['models']:
+            if model['vendor']==fabricante:
+                for tag in tags:
+                    model['tags'].append(tag)
+
+    with open('nuevojson.json', 'w') as f:
+        f.write(json.dumps(json_data))
+
+    array_modelos()
+    array_vendor()
+    print("LLEGO  BIEN HASTA ACA")
     return jsonify({'Ok':'Ok'}),200
 
 
