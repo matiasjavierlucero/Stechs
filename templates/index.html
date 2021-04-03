@@ -25,21 +25,55 @@
                 <button type="submit" class="btn btn-success mt-2" >Buscar</button>
             </form>
         </div>
+        
         <div class="col">
             <h3>Obtener Estadisticas</h3>
+            <form action="/estadisticas" method="post">
             <label for="Fabricante">Seleccione un fabricante</label>
-            <select name="fabricante" id="" class="form-control">
+            <select name="fabricante" id="fabricante" class="form-control">
                 {%for fabricante in Listado%}
                     {%if fabricante.0==''%}
                     <option value="{{fabricante.0}}">Sin Nombre</option>
                     {%endif%}
                     {%if fabricante.0!=''%}
-                    <option value="{{fabricante}}">{{fabricante.0}}</option>
+                    <option value="{{fabricante.0}}">{{fabricante.0}}</option>
                     {%endif%}
                 {%endfor%}
             </select>
+            <label for="modelo">Modelo</label>
+            <select id="optionmodelos" class="form-control" name="modelo">
+
+            </select>
+            <button type="submit" class="btn btn-success mt-2" >Ver Estadisticas</button>
+        </form>
         </div>
         
     </div>
 </div>
+
+
+<script>
+const Fabricante = document.getElementById('fabricante');
+console.log(Fabricante)
+Fabricante.addEventListener('change', (event) => {
+    $.ajax({
+                url: 'buscarmodelos',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify([{
+                    "Fabricante": Fabricante.value
+                }]),
+                success: function (data) {
+                    if (data.Mensaje == 'Correcto') {
+                        console.log('Anduvo')
+                        listaModelos = [] //lista de id de las prestaciones
+                        Modelo=(data.Modelos).map((item) => '<option value='+item[0]+'>'+item[0]+'</option>')
+                        Modelo='<option value=Todos>Todos los Modelos</option>'+Modelo
+                        $("#optionmodelos").html(Modelo)
+                    }
+                }
+            });
+});
+</script>
 {%endblock%}

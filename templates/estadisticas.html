@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{%block title%} Test Stechs {%endblock%}
+{%block body%}
+<div class="row">
+    <div class="col-md-12">
+        {% with messages = get_flashed_messages(with_categories = true ) %} {% if messages %} {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+    </div>
+    {% endfor %} {% endif %}{% endwith %}
+</div>
+<div class="container">
+    <div class="row mt-4">
+      <div class="col-6 text-center mb-2" >
+         <h3>Se encontrarorn {{Resultado.0.0}} cablemodems del modelo 
+             <b>{%if Modelo=='' %} Todos {%endif%} 
+                 {%if Modelo!='' %}{{Modelo}}{%endif%}
+            </b> 
+            del Fabricante <b>{{Fabricante}}</b>
+        </h3>
+        </div>
+        <div class="col-6 text-center">
+            <a href="/" class="btn btn-success"><i class="fa fa-search" aria-hidden="true"></i>Realizar Nueva Busqueda</a>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -151,4 +151,27 @@ def list_vendor():
     listado=cur.fetchall()
     return jsonify({'Listado':listado})
 
+@app.route('/list_models',methods=['POST'])
+def list_models():
+    Fabricante=request.form['Fabricante']
+    print(Fabricante)
+    cur.execute("SELECT vsi_model FROM docsis_update WHERE vsi_vendor=%s GROUP BY vsi_model",Fabricante)
+    modelos=cur.fetchall()
+    return jsonify({'Modelos':modelos})
+
+@app.route('/search_statistics',methods=['POST'])
+def search_statistics():
+    Fabricante=request.form['Fabricante']
+    Modelo=request.form['Modelo']
+    if Modelo=='':
+        query=cur.execute('SELECT COUNT(*) FROM docsis_update WHERE vsi_vendor=%s',(Fabricante))
+        Resultado=cur.fetchall()
+        print("RESULTADO API===>",Resultado)
+        return jsonify({'Resultado':Resultado})
+    else:
+        query=cur.execute('SELECT COUNT(*) FROM docsis_update WHERE vsi_vendor=%s AND vsi_model=%s',(Fabricante,Modelo))
+        Resultado=cur.fetchall()
+        print("RESULTADO API===>",Resultado)
+        return jsonify({'Resultado':Resultado})
+
 app.run(host='127.0.0.1',port='4500',debug=True)

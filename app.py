@@ -9,6 +9,33 @@ def index ():
     listadofabricantes=resp.json()['Listado']
     return render_template('index.html',Listado=listadofabricantes)
 
+@app.route('/buscarmodelos',methods=['POST'])
+def buscarmodelos():
+    datos = request.get_json()
+    datos = datos[0]
+    Fabricante=datos['Fabricante']
+    data = {'Fabricante':Fabricante}
+    resp = requests.post('http://localhost:4500/list_models', data=data)
+    Modelos=resp.json()['Modelos']
+    return jsonify ({'Mensaje':'Correcto','Modelos':Modelos})
+
+@app.route('/estadisticas',methods=['POST'])
+def estadisticas():
+    Fabricante=request.form['fabricante']
+    Modelo=request.form['modelo']
+    if Fabricante=='':
+        Modelo=''
+    else:
+        if Modelo=='Todos':
+            Modelo=''
+        else:
+            Modelo=Modelo
+    data={'Fabricante':Fabricante,'Modelo':Modelo}
+    Estadisticas = requests.post('http://localhost:4500/search_statistics', data=data)
+    Resultado=Estadisticas.json()['Resultado']
+    print(Resultado)
+    return render_template('estadisticas.html',Resultado=Resultado,Fabricante=Fabricante,Modelo=Modelo)
+
 @app.route ('/listar_no_habilitados',methods=['POST'])
 def listar_no_habilitados ():
     if request.method=='POST':
@@ -23,7 +50,6 @@ def listar_no_habilitados ():
             Frabricantes=resp.json()['Fabricantes']
             return render_template('agregartags.html',vendor=Vendor,Fabricantes=Frabricantes)
         else:
-    
             return render_template('nohabilitados.html',listado=Modelos,vendor=Vendor)
 
 @app.route('/guardartag',methods=['POST'])
