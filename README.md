@@ -13,7 +13,7 @@ pip3 install -r requirements.txt
 ```
  - Generar el json adecuado, tomando como base el archivo model.json para obtener un nuevo json donde se eliminen los registros repetidos y se agregue la clave 'tags'
  ```sh
-python 3 formatjson.py
+python3 formatjson.py
  ```
  -Correr la Api y luego la Aplicacion principal
   ```sh
