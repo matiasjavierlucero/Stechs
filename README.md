@@ -26,7 +26,7 @@ python3 formatjson.py
 
   ## Endpoints
 
-  Los endpoints se encuentran en la siguiente coleccion de Postma
+  Los endpoints se encuentran en la siguiente coleccion de Postman
 
   https://documenter.getpostman.com/view/10186174/TzCQaS5K
 
