@@ -23,14 +23,14 @@ python 3 formatjson.py
   python 3 api.py
   flask run
   ```
-  Obtener cliente en [http://127.0.0.1:5000/][PlDb] 
-  Mientras que el servidor correra en [http://127.0.0.1:4500/][PlDb] 
+  - Obtener cliente en http://127.0.0.1:5000/
+  - Mientras que el servidor correra en http://127.0.0.1:4500
   
 
   ## Endpoints
 
   Los endpoints se encuentran en la siguiente coleccion de Postma
 
-  [https://www.getpostman.com/collections/a60315d09fcfc1e08c0e][PlDb]
+  https://www.getpostman.com/collections/a60315d09fcfc1e08c0e
 
   
