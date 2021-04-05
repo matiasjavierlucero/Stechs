@@ -11,7 +11,7 @@ pip install -r requirements.txt
  ```sh
 pip3 install -r requirements.txt
 ```
- - Generar el json adecuado, tomando como base el archivo model.js para obtener un nuevo json donde se eliminen los registros repetidos y se agregue la clave 'tags'
+ - Generar el json adecuado, tomando como base el archivo model.json para obtener un nuevo json donde se eliminen los registros repetidos y se agregue la clave 'tags'
  ```sh
 python 3 formatjson.py
  ```
