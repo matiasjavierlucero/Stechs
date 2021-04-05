@@ -1,7 +1,4 @@
-# Test para Stechs
-## Lucero Matias 
-
-## Installation
+## Instalacion
 
 Antes que nada debemos crear una base de datos con el nombre Stechs e importar el .sql dado
 
