@@ -17,8 +17,8 @@ python 3 formatjson.py
  ```
  -Correr la Api y luego la Aplicacion principal
   ```sh
-  python 3 api.py
-  flask run
+  python3 api.py
+  flask run o python3 app.py 
   ```
   - Obtener cliente en http://127.0.0.1:5000/
   - Mientras que el servidor correra en http://127.0.0.1:4500
